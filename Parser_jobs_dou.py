@@ -12,9 +12,11 @@ HEADERS_1 = {
     'User-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:103.0) Gecko/20100101 Firefox/103.0'
 }
 
+
 def get_html_1(url, params=''):
     r1 = requests.get(url, headers=HEADERS_1, params=params)
     return r1
+
 
 def get_content_1(html_1):
     soup = BeautifulSoup(html_1, 'html.parser')
@@ -31,17 +33,19 @@ def get_content_1(html_1):
                 'link_company': item.find('a', class_='company').get('href')
             }
         )
-    return (vacancy_1)
+    return vacancy_1
 
 
 def save_doc_1(items_1, path):
     with open(path, 'w', newline='') as file:
         writer = csv.writer(file, delimiter=';')
-        writer.writerow(['дата', 'вакансія', 'опис вакансії', 'посилання на вакансію', 'компанія', 'посилання на компанію'])
+        writer.writerow(['дата', 'вакансія', 'опис вакансії', 'посилання на вакансію',
+                         'компанія', 'посилання на компанію'])
         for item in items_1:
-            writer.writerow([item['the_date'], item['job_title'], item['description'], item['link_job'], item['company'], item['link_company']])
+            writer.writerow([item['the_date'], item['job_title'], item['description'], item['link_job'],
+                             item['company'], item['link_company']])
 
 
 html_1 = get_html_1(URL_1)
-#print(get_content_1(html_1.text))
+print(get_content_1(html_1.text))
 save_doc_1(get_content_1(html_1.text), CSV_1)
