@@ -25,6 +25,7 @@ def create_file(data: list):
 
 
 def get_all_companies():
+
     page = requests.get(BASE_URL, headers=HEADERS).content
     soup = BeautifulSoup(page, "html.parser")
     companies = soup.select(".h2")
